@@ -18,7 +18,6 @@ Aplicación de seguimiento de estados de ánimo. Monorepo con backend en FastAPI
 ```
 backend/    # API FastAPI (puerto 8000)
 frontend/   # Aplicación Angular (puerto 4200)
-docs/       # Reglas y convenciones globales del proyecto
 ```
 
 ## Setup
@@ -31,6 +30,17 @@ cd backend && uv sync && make dev
 cd frontend && npm install && npm start
 ```
 
-## Reglas globales
+## Reglas
 
-Ver `docs/commits.md` para convenciones de commits.
+✓ Usar modelos Pydantic para validar todo input de la API.
+✗ Nunca aceptar `data: dict` sin modelo — usar clases Pydantic con tipos explícitos.
+
+✓ Los estilos CSS van en ficheros `.css` separados.
+✗ No usar estilos inline en templates de Angular ni en componentes.
+
+✓ Seguir el formato de commits convencionales: `feat:`, `fix:`, `chore:`, `test:`.
+
+## Referencias
+
+- Contexto del backend: `backend/AGENTS.md`
+- Contexto del frontend: `frontend/AGENTS.md`

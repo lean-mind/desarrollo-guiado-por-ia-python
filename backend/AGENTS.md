@@ -12,14 +12,20 @@ API REST construida con FastAPI. Almacenamiento en memoria (datos se pierden al 
 ## Arquitectura
 
 ```
-main.py         # Aplicación FastAPI: endpoints, lógica, almacenamiento en memoria (db = [])
+main.py         # Aplicación FastAPI completa: endpoints, lógica, almacenamiento en memoria
 pyproject.toml  # Dependencias declaradas (gestionadas con UV)
 Makefile        # Comandos de desarrollo
 ```
 
 ## Reglas
 
-Ver `docs/reglas.md` para las convenciones del backend.
+✓ Usar modelos Pydantic para el body de cada endpoint.
+✗ No aceptar `data: dict` sin modelo — definir siempre una clase Pydantic con tipos explícitos.
+
+✓ Separar la lógica de negocio de los endpoints (funciones o clases de servicio).
+✗ No mezclar lógica de negocio directamente en las funciones de ruta.
+
+✓ Añadir tests para cada endpoint con `pytest`.
 
 ## Comandos
 
