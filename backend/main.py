@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
 from datetime import datetime
 
 app = FastAPI()
@@ -14,12 +15,17 @@ app.add_middleware(
 db = []
 
 
+class CreateMoodRequest(BaseModel):
+    mood: str | None = Field(default=None, max_length=100)
+    note: str | None = Field(default=None, max_length=500)
+
+
 @app.post("/add")
-def add_mood(data: dict):
+def add_mood(data: CreateMoodRequest):
     mood_entry = {
         "id": len(db) + 1,
-        "mood": data.get("mood", "unknown"),
-        "note": data.get("note", ""),
+        "mood": data.mood or "unknown",
+        "note": data.note or "",
         "timestamp": datetime.now().isoformat(),
         "date_formatted": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "day_of_week": datetime.now().strftime("%A"),
