@@ -1,7 +1,9 @@
+from datetime import datetime
+from typing import Any
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from datetime import datetime
 
 app = FastAPI()
 
@@ -12,7 +14,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-db = []
+db: list[dict[str, Any]] = []
 
 
 class CreateMoodRequest(BaseModel):
@@ -21,8 +23,8 @@ class CreateMoodRequest(BaseModel):
 
 
 @app.post("/add")
-def add_mood(data: CreateMoodRequest):
-    mood_entry = {
+def add_mood(data: CreateMoodRequest) -> dict[str, Any]:
+    mood_entry: dict[str, Any] = {
         "id": len(db) + 1,
         "mood": data.mood or "unknown",
         "note": data.note or "",
@@ -36,7 +38,7 @@ def add_mood(data: CreateMoodRequest):
 
 
 @app.get("/list")
-def list_moods():
+def list_moods() -> dict[str, Any]:
     sorted_db = sorted(db, key=lambda x: x["timestamp"], reverse=True)
     for item in sorted_db:
         item["age_in_seconds"] = (
