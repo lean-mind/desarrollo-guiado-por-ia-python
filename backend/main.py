@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Any
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -35,6 +35,15 @@ def add_mood(data: CreateMoodRequest) -> dict[str, Any]:
     }
     db.append(mood_entry)
     return {"status": "added", "entry": mood_entry}
+
+
+@app.delete("/delete/{mood_id}")
+def delete_mood(mood_id: int) -> dict[str, Any]:
+    original_count = len(db)
+    db[:] = [m for m in db if m["id"] != mood_id]
+    if len(db) == original_count:
+        raise HTTPException(status_code=404, detail=f"Mood {mood_id} not found")
+    return {"status": "deleted", "id": mood_id}
 
 
 @app.get("/list")
