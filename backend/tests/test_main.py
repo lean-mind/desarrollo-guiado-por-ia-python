@@ -82,6 +82,34 @@ class TestDeleteMood:
         assert response.status_code == 404
 
 
+class TestGetStats:
+    def test_get_stats_empty_returns_zeros(self) -> None:
+        response = client.get("/stats")
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["total"] == 0
+        assert data["by_mood"] == {}
+
+    def test_get_stats_counts_moods_by_type(self) -> None:
+        client.post("/add", json={"mood": "happy"})
+        client.post("/add", json={"mood": "happy"})
+        client.post("/add", json={"mood": "sad"})
+
+        response = client.get("/stats")
+        data = response.json()
+
+        assert data["total"] == 3
+        assert data["by_mood"] == {"happy": 2, "sad": 1}
+
+    def test_get_stats_counts_unknown_when_mood_not_provided(self) -> None:
+        client.post("/add", json={})
+
+        response = client.get("/stats")
+
+        assert response.json()["by_mood"] == {"unknown": 1}
+
+
 class TestListMoods:
     def test_list_moods_empty_initially(self) -> None:
         response = client.get("/list")
