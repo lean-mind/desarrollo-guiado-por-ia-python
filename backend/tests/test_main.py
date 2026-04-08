@@ -58,6 +58,30 @@ class TestAddMood:
         assert "is_weekend" in entry
 
 
+class TestDeleteMood:
+    def test_delete_mood_returns_deleted_status(self) -> None:
+        response = client.post("/add", json={"mood": "happy"})
+        mood_id = response.json()["entry"]["id"]
+
+        response = client.delete(f"/delete/{mood_id}")
+
+        assert response.status_code == 200
+        assert response.json() == {"status": "deleted", "id": mood_id}
+
+    def test_delete_mood_removes_from_list(self) -> None:
+        client.post("/add", json={"mood": "happy"})
+        mood_id = client.get("/list").json()["moods"][0]["id"]
+
+        client.delete(f"/delete/{mood_id}")
+
+        assert client.get("/list").json()["count"] == 0
+
+    def test_delete_mood_not_found_returns_404(self) -> None:
+        response = client.delete("/delete/999")
+
+        assert response.status_code == 404
+
+
 class TestListMoods:
     def test_list_moods_empty_initially(self) -> None:
         response = client.get("/list")

@@ -8,6 +8,7 @@ API REST construida con FastAPI. Almacenamiento en memoria (datos se pierden al 
 |--------|------|------|-----------|
 | POST | `/add` | `{ mood?: string, note?: string }` | `{ status: str, entry: dict }` |
 | GET | `/list` | — | `{ moods: list, count: int }` |
+| DELETE | `/delete/{id}` | — | `{ status: str, id: int }` |
 
 ## Arquitectura
 
