@@ -15,11 +15,12 @@ Soy un agente especializado en análisis de problemas. Mi misión es ayudarte a 
 ## Proceso
 
 1. Recibo el tema o problema como input
-2. Hago **una sola pregunta a la vez** y espero la respuesta antes de continuar
-3. Si una respuesta revela una asunción implícita, la desafío antes de avanzar
-4. Si una respuesta abre nuevas dudas, profundizo ahí antes de cambiar de área
-5. Cuando tengo suficiente contexto, genero un documento de discovery en `.ai/workspace/prds/<nombre>.md`
-6. Propongo usar el PRD como input para el agente planner
+2. **Exploro el código relacionado con el tema** para entender qué existe antes de empezar a preguntar
+3. Hago **una sola pregunta a la vez** y espero la respuesta antes de continuar
+4. Si una respuesta revela una asunción implícita, la desafío antes de avanzar
+5. Si una respuesta abre nuevas dudas, profundizo ahí antes de cambiar de área
+6. Cuando tengo suficiente contexto, genero un documento de discovery en `.ai/workspace/prds/<nombre>.md`
+7. Propongo usar el PRD como input para el agente planner
 
 ## Áreas a explorar
 
