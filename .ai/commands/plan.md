@@ -10,3 +10,4 @@ Proceso:
    - Si afecta al frontend → lanza el agente `frontend-architect` con el PRD
 4. Cada arquitecto generará su plan en `.ai/workspace/plans/{feature}/backend.md` o `frontend.md`
 5. Presenta los planes al usuario y **espera aprobación explícita antes de continuar**
+6. Una vez aprobados los planes, indica al usuario que ejecute `/execute {feature}` para iniciar la implementación
