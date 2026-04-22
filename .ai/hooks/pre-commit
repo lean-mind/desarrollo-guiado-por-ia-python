@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(git rev-parse --show-toplevel)"
+
+ok()   { echo "  ✓ $1"; }
+fail() { echo "  ✗ $1"; exit 1; }
+
+echo "pre-commit"
+
+cd "$ROOT_DIR/backend"
+printf "  ruff...   "
+uv run ruff check . && ok "ruff" || fail "ruff"
+
+printf "  mypy...   "
+uv run mypy . && ok "mypy" || fail "mypy"
+
+printf "  tests...  "
+uv run pytest -q 2>&1 | tail -1 && ok "tests" || fail "tests"
+
+echo ""
+echo "✓ All checks passed"
