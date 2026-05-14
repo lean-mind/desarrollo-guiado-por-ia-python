@@ -37,6 +37,15 @@ def add_mood(data: CreateMoodRequest) -> dict[str, Any]:
     return {"status": "added", "entry": mood_entry}
 
 
+@app.get("/stats")
+def get_stats() -> dict[str, Any]:
+    by_mood: dict[str, int] = {}
+    for entry in db:
+        mood = entry["mood"]
+        by_mood[mood] = by_mood.get(mood, 0) + 1
+    return {"total": len(db), "by_mood": by_mood}
+
+
 @app.delete("/delete/{mood_id}")
 def delete_mood(mood_id: int) -> dict[str, Any]:
     original_count = len(db)
